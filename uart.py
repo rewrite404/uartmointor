@@ -51,27 +51,26 @@ def read_uart():
     while True:
         print('is reading')
         u_read = sp.read()
+        print('is pushing')
+        print('contant is ' + u_read)
+        payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + u_read + '\"}'
+        payload = payload.encode("ascii")
+        request = urllib.request.Request(
+            url,
+            data=payload,
+            method="POST"
+        )
+        print('request with out header')
+        request.add_header(
+            "Content-Type",
+            "application/json"
+        )
+        print('request qith header')
+        urllib.request.urlopen(request)
+        print('pushed to aaron line')
         output_queue.put(u_read)
         if not output_queue.empty():
             print(output_queue.get())
-            print('is pushing')
-            content = output_queue.get()
-            print('contant is '+content)
-            payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + content + '\"}'
-            payload = payload.encode("ascii")
-            request = urllib.request.Request(
-                url,
-                data=payload,
-                method="POST"
-            )
-            print('request with out header')
-            request.add_header(
-                "Content-Type",
-                "application/json"
-            )
-            print('request qith header')
-            urllib.request.urlopen(request)
-            print('pushed to aaron line')
             print('=========')
 
 def write_uart():
