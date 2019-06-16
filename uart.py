@@ -49,10 +49,12 @@ class SerialProcess:
 
 def read_uart():
     while True:
-        data = sp.read()
-        output_queue.put(data)
+        print('is reading')
+        u_read = sp.read()
+        output_queue.put(u_read)
         if not output_queue.empty():
             print(output_queue.get())
+            print('is pushing')
             content = output_queue.get()
             payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + content + '\"}'
             payload = payload.encode("ascii")
