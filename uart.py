@@ -53,14 +53,6 @@ def read_uart():
         output_queue.put(data)
         if not output_queue.empty():
             print(output_queue.get())
-            print('=========')
-
-def write_uart():
-    while True:
-        data = sp.read()
-        output_queue.put(data)
-        if not output_queue.empty():
-            print(output_queue.get())
             content = output_queue.get()
             payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + content + '\"}'
             payload = payload.encode("ascii")
@@ -75,6 +67,14 @@ def write_uart():
             )
             urllib.request.urlopen(request)
             print('pushed to aaron line')
+            print('=========')
+
+def write_uart():
+    while True:
+        data = sp.read()
+        output_queue.put(data)
+        if not output_queue.empty():
+            print(output_queue.get())
             print('=========')
 
 
