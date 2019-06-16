@@ -45,6 +45,7 @@ class SerialProcess:
 def read_uart():
     while True:
         data = sp.read()
+        print(data)
         output_queue.put(data)
         if not output_queue.empty():
             print(output_queue.get())
