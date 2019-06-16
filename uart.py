@@ -43,7 +43,7 @@ class SerialProcess:
         self.zigbee_uart.write(data.encode())
 
     def read(self):
-        data = self.zigbee_uart.readline().strip()
+        data = self.zigbee_uart.readline().strip().decode("utf-8")
         return data
 
 
@@ -72,12 +72,12 @@ def read_uart():
     while True:
         print('is reading')
         u_read = sp.read()
-        contant = u_read.decode("utf-8")
-        publish_to_line(contant)
+        publish_to_line(u_read)
         output_queue.put(u_read)
         if not output_queue.empty():
             print(output_queue.get())
-            print('=========')
+            print(u_read)
+            #print('=========')
 
 def write_uart():
     while True:
