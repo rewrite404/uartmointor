@@ -56,6 +56,7 @@ def read_uart():
             print(output_queue.get())
             print('is pushing')
             content = output_queue.get()
+            print('contant is '+content)
             payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + content + '\"}'
             payload = payload.encode("ascii")
             request = urllib.request.Request(
@@ -63,10 +64,12 @@ def read_uart():
                 data=payload,
                 method="POST"
             )
+            print('request with out header')
             request.add_header(
                 "Content-Type",
                 "application/json"
             )
+            print('request qith header')
             urllib.request.urlopen(request)
             print('pushed to aaron line')
             print('=========')
