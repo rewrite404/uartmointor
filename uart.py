@@ -3,7 +3,12 @@ import threading
 import queue as queue
 from time import sleep, time
 from signal import pause
+import urllib
+import requests
+import json
 
+url = 'https://admin.eti.sysop.app/messages/push'
+headers = {'Content-Type': 'application/json'}
 
 class SerialProcess:
     def in_waiting(self):
@@ -45,7 +50,6 @@ class SerialProcess:
 def read_uart():
     while True:
         data = sp.read()
-        print(data)
         output_queue.put(data)
         if not output_queue.empty():
             print(output_queue.get())
@@ -57,6 +61,20 @@ def write_uart():
         output_queue.put(data)
         if not output_queue.empty():
             print(output_queue.get())
+            content = output_queue.get()
+            payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + content + '\"}'
+            payload = payload.encode("ascii")
+            request = urllib.request.Request(
+                url,
+                data=payload,
+                method="POST"
+            )
+            request.add_header(
+                "Content-Type",
+                "application/json"
+            )
+            urllib.request.urlopen(request)
+            print('pushed to aaron line')
             print('=========')
 
 
