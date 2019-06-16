@@ -1,7 +1,8 @@
 import serial as serial
 import threading
-import queue
+import Queue as queue
 from time import sleep, time
+from signal import pause
 
 
 class SerialProcess:
@@ -37,15 +38,28 @@ class SerialProcess:
         self.zigbee_uart.write(data.encode())
 
     def read(self):
-        data = self.zigbee_uart.readline().strip().decode('utf8')
+        data = self.zigbee_uart.readline().strip()
         return data
 
 
+def read_uart():
+    while True:
+        data = sp.read()
+        output_queue.put(data)
+        if not output_queue.empty():
+            print(output_queue.get())
+            print('=========')
+
+def write_uart():
+    while True:
+        data = sp.read()
+        output_queue.put(data)
+        if not output_queue.empty():
+            print(output_queue.get())
+            print('=========')
+
+
 if __name__ == '__main__':
-
-    # sudo service pigpiod start
-    # sudo service pigpiod stop
-
     time()
     input_queue = queue.Queue()
     output_queue = queue.Queue()
@@ -54,13 +68,14 @@ if __name__ == '__main__':
 
     while True:
         while not sp.is_open():
-            print('port is open')
+            print('port is not open')
+            sleep(5)
 
         try:
-            print('Hekko world')
-            #t = threading.Thread(target=io_jobs)
-            #t.start()
-            #pause()
+            print('Hello world')
+            t = threading.Thread(target=read_uart())
+            t.start()
+            pause()
         except Exception:
             sp.close()
             raise
