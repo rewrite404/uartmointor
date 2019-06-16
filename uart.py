@@ -52,9 +52,9 @@ def read_uart():
         print('is reading')
         u_read = sp.read()
         print('is pushing')
-        contant = u_read.decode("utf-8") 
+        contant = u_read.decode("utf-8")
         #print('contant is ' + u_read)
-        payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + u_read + '\"}'
+        payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + contant + '\"}'
         payload = payload.encode("ascii")
         request = urllib.request.Request(
             url,
