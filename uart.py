@@ -1,6 +1,6 @@
 import serial as serial
 import threading
-import Queue as queue
+import queue as queue
 from time import sleep, time
 from signal import pause
 
