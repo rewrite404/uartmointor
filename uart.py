@@ -18,7 +18,7 @@ class SerialProcess:
         return
 
     def __init__(self):
-        self.zigbee_uart = serial.Serial(port='/dev/ttyS1',
+        self.zigbee_uart = serial.Serial(port='/dev/ttyS0',
                                          baudrate=57600,
                                          parity=serial.PARITY_NONE,
                                          stopbits=serial.STOPBITS_ONE,
