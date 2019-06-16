@@ -47,28 +47,33 @@ class SerialProcess:
         return data
 
 
+def publish_to_line(msg):
+    print('is pushing')
+    # print('contant is ' + u_read)
+    payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + msg + '\"}'
+    payload = payload.encode("ascii")
+    request = urllib.request.Request(
+        url,
+        data=payload,
+        method="POST"
+    )
+    print('request with out header')
+    request.add_header(
+        "Content-Type",
+        "application/json"
+    )
+    print('request qith header')
+    urllib.request.urlopen(request)
+    print('pushed to aaron line')
+
+
+
 def read_uart():
     while True:
         print('is reading')
         u_read = sp.read()
-        print('is pushing')
         contant = u_read.decode("utf-8")
-        #print('contant is ' + u_read)
-        payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + contant + '\"}'
-        payload = payload.encode("ascii")
-        request = urllib.request.Request(
-            url,
-            data=payload,
-            method="POST"
-        )
-        print('request with out header')
-        request.add_header(
-            "Content-Type",
-            "application/json"
-        )
-        print('request qith header')
-        urllib.request.urlopen(request)
-        print('pushed to aaron line')
+        publish_to_line(contant)
         output_queue.put(u_read)
         if not output_queue.empty():
             print(output_queue.get())
