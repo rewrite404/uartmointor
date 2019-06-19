@@ -91,6 +91,7 @@ def write_uart():
 def reboot_count():
     while True:
         print('thread 2')
+        sleep(2)
         if not output_queue.empty():
             line = output_queue.get()
             print('line is'+line)
