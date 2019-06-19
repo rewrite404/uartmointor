@@ -72,10 +72,10 @@ def read_uart():
     while True:
         print('is reading')
         u_read = sp.read()
-        publish_to_line(u_read)
+        #publish_to_line(u_read)
         output_queue.put(u_read)
         if not output_queue.empty():
-            #print(output_queue.get())
+            print(output_queue.get())
             #print(u_read)
             print('=========')
 
