@@ -74,9 +74,9 @@ def read_uart():
         u_read = sp.read()
         #publish_to_line(u_read)
         print('this is=='+u_read+'==')
-        output_queue.put(u_read)
-        #if not output_queue.empty():
-            #print(output_queue.get())
+        if u_read:
+            output_queue.put(u_read)
+            print(output_queue.get())
             #print(u_read)
             #print('=========')
 
@@ -96,6 +96,7 @@ def reboot_count():
         if not output_queue.empty():
             line = output_queue.get()
             print('line is'+line)
+
 
 
 
