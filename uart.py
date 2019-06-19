@@ -111,9 +111,9 @@ if __name__ == '__main__':
         try:
             print('Hello world')
             t2 = threading.Thread(target=reboot_count())
+            t2.start()
             t1 = threading.Thread(target=read_uart())
             print('t2 started')
-            t2.start()
             print('t1 started')
             t1.start()
             pause()
