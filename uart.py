@@ -110,8 +110,8 @@ if __name__ == '__main__':
 
         try:
             print('Hello world')
-            t1 = threading.Thread(target=read_uart())
             t2 = threading.Thread(target=reboot_count())
+            t1 = threading.Thread(target=read_uart())
             print('t2 started')
             t2.start()
             print('t1 started')
