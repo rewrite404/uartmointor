@@ -112,10 +112,10 @@ if __name__ == '__main__':
             print('Hello world')
             t1 = threading.Thread(target=read_uart())
             t2 = threading.Thread(target=reboot_count())
-            t2.start()
-            t1.start()
-            print('t1 started')
             print('t2 started')
+            t2.start()
+            print('t1 started')
+            t1.start()
             pause()
         except Exception:
             sp.close()
