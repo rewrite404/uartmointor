@@ -87,8 +87,10 @@ def write_uart():
             print(output_queue.get())
             print('=========')
 
+
 def reboot_count():
     while True:
+        print('thread 2')
         if not output_queue.empty():
             line = output_queue.get()
             print('line is'+line)
@@ -110,9 +112,9 @@ if __name__ == '__main__':
             print('Hello world')
             t1 = threading.Thread(target=read_uart())
             t2 = threading.Thread(target=reboot_count())
+            t2.start()
             t1.start()
             print('t1 started')
-            t2.start()
             print('t2 started')
             pause()
         except Exception:
