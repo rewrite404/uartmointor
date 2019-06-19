@@ -75,9 +75,9 @@ def read_uart():
         #publish_to_line(u_read)
         output_queue.put(u_read)
         if not output_queue.empty():
-            print(output_queue.get())
-            print(u_read)
-            #print('=========')
+            #print(output_queue.get())
+            #print(u_read)
+            print('=========')
 
 def write_uart():
     while True:
@@ -86,6 +86,12 @@ def write_uart():
         if not output_queue.empty():
             print(output_queue.get())
             print('=========')
+
+def reboot_count():
+    while True:
+        if not output_queue.empty():
+            line = output_queue.get()
+            print('line is'+line)
 
 
 if __name__ == '__main__':
@@ -102,8 +108,10 @@ if __name__ == '__main__':
 
         try:
             print('Hello world')
-            t = threading.Thread(target=read_uart())
-            t.start()
+            t1 = threading.Thread(target=read_uart())
+            t2 = threading.Thread(target=reboot_count())
+            t1.start()
+            t2.start()
             pause()
         except Exception:
             sp.close()
