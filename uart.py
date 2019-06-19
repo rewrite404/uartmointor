@@ -70,14 +70,15 @@ def publish_to_line(msg):
 
 def read_uart():
     while True:
-        print('is reading')
+        #print('is reading')
         u_read = sp.read()
         #publish_to_line(u_read)
+        print('this is=='+u_read+'==')
         output_queue.put(u_read)
-        if not output_queue.empty():
-            print(output_queue.get())
+        #if not output_queue.empty():
+            #print(output_queue.get())
             #print(u_read)
-            print('=========')
+            #print('=========')
 
 def write_uart():
     while True:
@@ -95,6 +96,7 @@ def reboot_count():
         if not output_queue.empty():
             line = output_queue.get()
             print('line is'+line)
+
 
 
 if __name__ == '__main__':
