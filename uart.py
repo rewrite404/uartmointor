@@ -116,7 +116,7 @@ if __name__ == '__main__':
             print('t2 started')
             print('t1 started')
             t1.start()
-            t2.start()
+            #t2.start()
             pause()
         except Exception:
             sp.close()
