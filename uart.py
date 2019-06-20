@@ -77,7 +77,7 @@ def publish_to_telegram(msg):
     print('is pushing')
     # print('contant is ' + u_read)
     payload = '{\"name\":value}'
-    t_payload = '{ z'+'}'
+    t_payload = '{ '+'}'
     payload = payload.encode("ascii")
     request = urllib.request.Request(
         tele_url,
