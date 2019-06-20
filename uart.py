@@ -100,11 +100,11 @@ def reboot_count():
                 global start
                 start = True
                 print('start')
-            if line == 'random: nonblocking pool is initialized':
+            if line == 'Please press Enter to activate this console.':
                 global end
                 end = True
                 print('end')
-            if start == True and end ==True:
+            if start == True and end == True:
                 start = False
                 end =False
                 write_uart()
