@@ -76,7 +76,7 @@ def read_uart():
         #print('this is=='+u_read+'==')
         if u_read:
             output_queue.put(u_read)
-            print(output_queue.get())
+            #print(output_queue.get())
             #print(u_read)
             #print('=========')
 
@@ -96,9 +96,9 @@ def reboot_count():
         if not output_queue.empty():
             line = output_queue.get()
             word = line.split(' ')
-            if word[2] == 'Linux':
+            if line == '[04010D08][04010C0E]':
                 print('start')
-            if word[2] == 'random':
+            if line == 'Please press Enter to activate this console.':
                 print('end')
             #print('line is'+line)
 
