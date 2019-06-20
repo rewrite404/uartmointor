@@ -9,6 +9,8 @@ import json
 
 url = 'https://admin.eti.sysop.app/messages/push'
 headers = {'Content-Type': 'application/json'}
+tele_url = 'https://owwxorolda.execute-api.us-west-2.amazonaws.com/alpha'
+
 
 start = False
 end = False
@@ -71,6 +73,26 @@ def publish_to_line(msg):
     print('pushed to aaron line')
 
 
+def publish_to_telegram(msg):
+    print('is pushing')
+    # print('contant is ' + u_read)
+    payload = '{\"name\":value}'
+    payload = payload.encode("ascii")
+    request = urllib.request.Request(
+        tele_url,
+        data=payload,
+        method="POST"
+    )
+    print('request with out header')
+    request.add_header(
+        "Content-Type",
+        "application/json"
+    )
+    print('request qith header')
+    urllib.request.urlopen(request)
+    print('pushed to aaron line')
+
+
 
 def read_uart():
     while True:
@@ -108,10 +130,11 @@ def reboot_count():
             if start == True and end == True:
                 start = False
                 end =False
+                sleep(30)
                 write_uart()
                 global rcount
                 rcount += 1
-                publish_to_line('reboot count is '+str(rcount))
+                publish_to_telegram('reboot count is '+str(rcount))
                 print('reeboot')
                 print('reboot count'+str(rcount))
             #print('line is'+line)
