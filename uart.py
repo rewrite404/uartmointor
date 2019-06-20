@@ -97,7 +97,7 @@ def reboot_count():
             line = output_queue.get()
             print('line is'+line)
             word = line.split(' ')
-            if line == '[04010D08][04010C0E]':
+            if line == 'Board: Ralink APSoC':
                 print('start')
             if line == 'Please press Enter to activate this console.':
                 print('end')
