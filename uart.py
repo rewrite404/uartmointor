@@ -95,6 +95,7 @@ def reboot_count():
         sleep(1)
         if not output_queue.empty():
             line = output_queue.get()
+            print('line is'+line)
             word = line.split(' ')
             if line == '[04010D08][04010C0E]':
                 print('start')
