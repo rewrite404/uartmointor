@@ -127,7 +127,7 @@ def reboot_count():
             if start == True and end == True:
                 start = False
                 end =False
-                sleep(1)
+                sleep(60)
                 write_uart()
                 global rcount
                 rcount += 1
