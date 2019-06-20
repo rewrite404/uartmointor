@@ -77,19 +77,17 @@ def publish_to_telegram(msg):
     print('is pushing')
     # print('contant is ' + u_read)
     payload = '{\"name\":value}'
-    t_payload = '{\"bot\":\"eti-dev\",\"to_user\":\"aaron\",\"text\":\"' + msg + '\"}'
+    t_payload = '{\"bot\":\"apacer-iot\",\"to_user\":\"aaron\",\"text\":\"Hello~~\"}'
     payload = payload.encode("ascii")
     request = urllib.request.Request(
         tele_url,
         data=t_payload,
         method="POST"
     )
-    print('request with out header')
     request.add_header(
         "Content-Type",
         "application/json"
     )
-    print('request qith header')
     urllib.request.urlopen(request)
     print('pushed to aaron line')
 
