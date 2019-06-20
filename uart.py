@@ -131,7 +131,7 @@ def reboot_count():
                 write_uart()
                 global rcount
                 rcount += 1
-                publish_to_telegram('reboot count is '+str(rcount))
+                publish_to_telegram('Reboot count is '+str(rcount))
                 print('reeboot')
                 print('reboot count'+str(rcount))
             #print('line is'+line)
