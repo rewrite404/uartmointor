@@ -73,7 +73,7 @@ def read_uart():
         #print('is reading')
         u_read = sp.read()
         #publish_to_line(u_read)
-        print('this is=='+u_read+'==')
+        #print('this is=='+u_read+'==')
         if u_read:
             output_queue.put(u_read)
             print(output_queue.get())
@@ -91,11 +91,16 @@ def write_uart():
 
 def reboot_count():
     while True:
-        print('thread 2')
+        #print('thread 2')
         sleep(1)
         if not output_queue.empty():
             line = output_queue.get()
-            print('line is'+line)
+            word = line.split(' ')
+            if word[2] == 'Linux':
+                print('start')
+            if word[2] == 'random':
+                print('end')
+            #print('line is'+line)
 
 
 
@@ -119,7 +124,7 @@ if __name__ == '__main__':
             print('t2 started')
             print('t1 started')
             t1.start()
-            #t2.start()
+            t2.start()
             pause()
         except Exception:
             sp.close()
