@@ -77,10 +77,11 @@ def publish_to_telegram(msg):
     print('is pushing')
     # print('contant is ' + u_read)
     payload = '{\"name\":value}'
+    t_payload = { }
     payload = payload.encode("ascii")
     request = urllib.request.Request(
         tele_url,
-        data=payload,
+        data=t_payload,
         method="POST"
     )
     print('request with out header')
@@ -130,7 +131,7 @@ def reboot_count():
             if start == True and end == True:
                 start = False
                 end =False
-                sleep(30)
+                sleep(1)
                 write_uart()
                 global rcount
                 rcount += 1
