@@ -97,7 +97,7 @@ def reboot_count():
             line = output_queue.get()
             print('line is'+line)
             word = line.split(' ')
-            if line == 'Board: Ralink APSoC':
+            if line == 'U-Boot 1.1.3 (Dec  6 2016 - 11:20:23)':
                 print('start')
             if line == 'Please press Enter to activate this console.':
                 print('end')
