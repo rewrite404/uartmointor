@@ -10,6 +10,10 @@ import json
 url = 'https://admin.eti.sysop.app/messages/push'
 headers = {'Content-Type': 'application/json'}
 
+start = False
+end = False
+rcount = 0
+
 class SerialProcess:
     def in_waiting(self):
         return self.zigbee_uart.inWaiting()
@@ -81,12 +85,7 @@ def read_uart():
             #print('=========')
 
 def write_uart():
-    while True:
-        data = sp.read()
-        output_queue.put(data)
-        if not output_queue.empty():
-            print(output_queue.get())
-            print('=========')
+    sp.write('reboot')
 
 
 def reboot_count():
@@ -98,9 +97,21 @@ def reboot_count():
             print('line is'+line)
             word = line.split(' ')
             if line == 'U-Boot 1.1.3 (Dec  6 2016 - 11:20:23)':
+                global start
+                start = True
                 print('start')
-            if line == 'Please press Enter to activate this console.':
+            if line == 'random: nonblocking pool is initialized':
+                global end
+                end = True
                 print('end')
+            if start == True and end ==True:
+                start = False
+                end =False
+                write_uart()
+                global rcount
+                rcount += 1
+                print('reeboot')
+                print('reboot count'+str(rcount))
             #print('line is'+line)
 
 
