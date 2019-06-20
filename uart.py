@@ -75,12 +75,11 @@ def publish_to_line(msg):
 
 def publish_to_telegram(msg):
     print('msg is ' + msg)
-    payload = '{\"name\":value}'
-    t_payload = '{\"bot\":\"apacer-iot\",\"to_user\":\"aaron\",\"text\":\"Hello~~\"}'
-    t_payload = t_payload.encode("ascii")
+    payload = '{\"text\":\"' + msg + '\"}'
+    payload = payload.encode("ascii")
     request = urllib.request.Request(
         tele_url,
-        data=t_payload,
+        data=payload,
         method="POST"
     )
     request.add_header(
