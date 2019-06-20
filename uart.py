@@ -85,6 +85,7 @@ def read_uart():
             #print('=========')
 
 def write_uart():
+    sp.write('\n')
     sp.write('reboot')
 
 
@@ -110,6 +111,7 @@ def reboot_count():
                 write_uart()
                 global rcount
                 rcount += 1
+                publish_to_line('reboot count is '+str(rcount))
                 print('reeboot')
                 print('reboot count'+str(rcount))
             #print('line is'+line)
