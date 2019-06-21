@@ -106,6 +106,7 @@ def read_uart():
 def write_uart():
     sp.write('\n')
     sp.write('reboot')
+    output_queue.queue.clear()
 
 
 def reboot_count():
