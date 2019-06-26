@@ -16,16 +16,6 @@ start = False
 end = False
 rcount = 0
 
-'''
-dongle = serial.Serial(port="/dev/ttyUSB0",
-                       baudrate=115200,
-                       parity=serial.PARITY_NONE,
-                       stopbits=serial.STOPBITS_ONE,
-                       bytesize=serial.EIGHTBITS,
-                       writeTimeout=5,
-                       rtscts=True,
-                       timeout=5)
-'''
 
 class SerialProcess:
     def in_waiting(self):
@@ -100,14 +90,6 @@ def publish_to_telegram(msg):
     urllib.request.urlopen(request)
     print('pushed to aaron line')
 
-'''
-def send_reboot():
-    if dongle.isOpen():
-        print('dongle is open')
-    else:
-        print('dongle is broken')
-
-'''
 
 def read_uart():
     while True:
