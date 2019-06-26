@@ -16,6 +16,16 @@ start = False
 end = False
 rcount = 0
 
+dongle = serial.Serial(port="/dev/ttyUSB0",
+                       baudrate=115200,
+                       parity=serial.PARITY_NONE,
+                       stopbits=serial.STOPBITS_ONE,
+                       bytesize=serial.EIGHTBITS,
+                       writeTimeout=5,
+                       rtscts=True,
+                       timeout=5)
+
+
 class SerialProcess:
     def in_waiting(self):
         return self.zigbee_uart.inWaiting()
@@ -90,6 +100,13 @@ def publish_to_telegram(msg):
     print('pushed to aaron line')
 
 
+def send_reboot():
+    if dongle.isOpen():
+        print('dongle is open')
+    else:
+        print('dongle is broken')
+
+
 
 def read_uart():
     while True:
@@ -146,12 +163,10 @@ if __name__ == '__main__':
     output_queue = queue.Queue()
 
     sp = SerialProcess()
-
     while True:
         while not sp.is_open():
             print('port is not open')
             sleep(5)
-
         try:
             print('Hello world')
             t2 = threading.Thread(target=reboot_count)
