@@ -1,12 +1,15 @@
 import serial as serial
 import threading
 import queue as queue
+import Queue
 from time import sleep, time
 from signal import pause
 import urllib
 import requests
 import json
 import paho.mqtt.client as paho
+import ssl
+import sys
 
 url = 'https://admin.eti.sysop.app/messages/push'
 headers = {'Content-Type': 'application/json'}
