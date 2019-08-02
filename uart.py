@@ -6,6 +6,7 @@ from signal import pause
 import urllib
 import requests
 import json
+import paho.mqtt.client as paho
 
 url = 'https://admin.eti.sysop.app/messages/push'
 headers = {'Content-Type': 'application/json'}
@@ -52,6 +53,32 @@ class SerialProcess:
     def read(self):
         data = self.zigbee_uart.readline().strip().decode("utf-8", 'ignore')
         return data
+
+
+
+def on_connect(client, userdata, flags, rc):
+    global connflag
+    connflag = True
+    print("Connection returned result: " + str(rc) )
+
+def on_message(client, userdata, msg):
+    print(msg.topic+" "+str(msg.payload))
+
+mqttc = paho.Client()
+mqttc.on_connect = on_connect
+mqttc.on_message = on_message
+
+awshost = "a3vq3t01rvglnj-ats.iot.us-west-2.amazonaws.com"
+awsport = 8883
+clientId = "sensorData"
+thingName = "sensorData"
+caPath = "./AmazonRootCA1.pem.crt"
+certPath = "./ca50e7965e-certificate.pem.crt"
+keyPath = "./ca50e7965e-private.pem.key"
+
+mqttc.tls_set(caPath, certfile=certPath, keyfile=keyPath, cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLSv1_2, ciphers=None)
+mqttc.connect(awshost, awsport, keepalive=60)
+mqttc.loop_start()
 
 
 def publish_to_line(msg):
@@ -109,6 +136,16 @@ def write_uart():
     output_queue.queue.clear()
 
 
+def send_MQTT():
+    mqttc.publish("cmj/F87AEF00000025C3/rpc",
+                  '{"rpc_cmd":"zigbee_zcl_ha_ON_OFF_On","rpc_id":1564029017300,"rpc_param":{"euinwk_endpoint_list":[{"endpoint":1,"euinwk":"000D6F000AF1A964"}],"sequence":15}}',
+                  qos=1)
+    sleep(5)
+    mqttc.publish("cmj/F87AEF00000025C3/rpc",
+                  '{"rpc_cmd":"zigbee_zcl_ha_ON_OFF_On","rpc_id":1564029017300,"rpc_param":{"euinwk_endpoint_list":[{"endpoint":1,"euinwk":"000D6F000AF1A964"}],"sequence":15}}',
+                  qos=1)
+    output_queue.queue.clear()
+
 def reboot_count():
     while True:
         #print('thread 2')
@@ -129,7 +166,8 @@ def reboot_count():
                 start = False
                 end =False
                 sleep(60)
-                write_uart()
+                #write_uart()
+                send_MQTT()
                 global rcount
                 rcount += 1
                 publish_to_telegram('Reboot count is '+str(rcount))
